@@ -35,4 +35,7 @@ start_btn.grid(row=2, column=0)
 reset_btn = Button(text="Reset")
 reset_btn.grid(row=2, column=2)
 
+checkmark = Label(text="✔", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 10, "bold"))
+checkmark.grid(row=3, column=1)
+
 window.mainloop()
