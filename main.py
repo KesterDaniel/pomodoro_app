@@ -6,12 +6,22 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 2
-SHORT_BREAK_MIN = 1
-LONG_BREAK_MIN = 1
+WORK_MIN = 25
+SHORT_BREAK_MIN = 5
+LONG_BREAK_MIN = 10
 reps = 0
+timer = None
+
 
 # ---------------------------- TIMER RESET ------------------------------- # 
+def reset_timer():
+    global reps
+    reps = 0
+    window.after_cancel(timer)
+    title.config(text="Timer")
+    checkmark.config(text="")
+    canvas.itemconfig(timer_text, text="00:00")
+
 
 # ---------------------------- TIMER MECHANISM ------------------------------- # 
 def start_timer():
@@ -42,7 +52,8 @@ def count_down(count):
         count_sec = f"0{count_sec}"
     canvas.itemconfig(timer_text, text=f"{count_min}:{count_sec}")
     if count > 0:
-        window.after(100, count_down, count-1)
+        global timer
+        timer = window.after(1000, count_down, count-1)
     else:
         start_timer()
         marks = ""
@@ -68,12 +79,11 @@ canvas.grid(row=1, column=1)
 start_btn = Button(text="Start", command=start_timer)
 start_btn.grid(row=2, column=0)
 
-reset_btn = Button(text="Reset")
+reset_btn = Button(text="Reset", command=reset_timer)
 reset_btn.grid(row=2, column=2)
 
 checkmark = Label(text="", fg=GREEN, bg=YELLOW, font=(FONT_NAME, 10, "bold"))
 checkmark.grid(row=3, column=1)
 
-print(math.floor(2.0))
 
 window.mainloop()
